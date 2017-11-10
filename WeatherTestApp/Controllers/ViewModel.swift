@@ -9,11 +9,16 @@
 import Foundation
 import CoreLocation
 
+protocol ViewModelDelegate {
+    func displayCityWeather()
+}
+
 class ViewModel: NSObject, CLLocationManagerDelegate {
     
     let locationManager = CLLocationManager()
+    var delegate: ViewModelDelegate?
     
-    func getCurrentPosition(completion: (_: City) -> ()) {
+    func getCurrentPosition(completion: (_: City?, _ response: Bool) -> ()) {
         // Ask for Authorisation from the User.
         locationManager.requestAlwaysAuthorization()
         
@@ -22,16 +27,25 @@ class ViewModel: NSObject, CLLocationManagerDelegate {
         
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.startUpdatingLocation()
         }
-        
-        completion(City(longitude: locationManager.location!.coordinate.longitude, latitude: locationManager.location!.coordinate.latitude))
+        if locationManager.location?.coordinate.longitude != nil, locationManager.location?.coordinate.latitude != nil {
+            completion(
+                City(longitude: (locationManager.location?.coordinate.longitude)!,
+                     latitude: (locationManager.location?.coordinate.latitude)!), true)
+        } else {
+            completion(nil, false)
+        }
     }
     
-    internal func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
-        print("locations = \(locValue.latitude) \(locValue.longitude)")
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        _ = manager.location!.coordinate
+        //print("locations = \(locValue.latitude) \(locValue.longitude)")
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        delegate?.displayCityWeather()
     }
 }
 

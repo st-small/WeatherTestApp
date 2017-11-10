@@ -26,9 +26,11 @@
 		<true/>
 	</dict>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>We'll update weather forecast</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>We'll update weather forecast</string>
+	<string>We'll update information about weather forecast</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We'll update information about weather forecast</string>
+	<key>NSLocationWhenInUseUsageDescription </key>
+	<string>We'll update information about weather forecast</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
