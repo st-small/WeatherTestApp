@@ -17,8 +17,9 @@ class ViewModel: NSObject, CLLocationManagerDelegate {
     
     let locationManager = CLLocationManager()
     var delegate: ViewModelDelegate?
+    var city = ""
     
-    func getCurrentPosition(completion: (_: City?, _ response: Bool) -> ()) {
+    func getCurrentPosition(completion: @escaping (_: City?, _ response: Bool) -> ()) {
         // Ask for Authorisation from the User.
         locationManager.requestAlwaysAuthorization()
         
@@ -30,10 +31,12 @@ class ViewModel: NSObject, CLLocationManagerDelegate {
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.startUpdatingLocation()
         }
-        if locationManager.location?.coordinate.longitude != nil, locationManager.location?.coordinate.latitude != nil {
-            completion(
-                City(longitude: (locationManager.location?.coordinate.longitude)!,
-                     latitude: (locationManager.location?.coordinate.latitude)!), true)
+        if ((locationManager.location?.coordinate) != nil) {
+            let loc = CLLocation(latitude: (locationManager.location?.coordinate.latitude)!, longitude: (locationManager.location?.coordinate.longitude)!)
+            getCityName(location: loc, completion: { [weak self] in
+                completion(City(longitude: (loc.coordinate.longitude),
+                                latitude: (loc.coordinate.latitude), city: self?.city), true)
+            })
         } else {
             completion(nil, false)
         }
@@ -42,6 +45,17 @@ class ViewModel: NSObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         _ = manager.location!.coordinate
         //print("locations = \(locValue.latitude) \(locValue.longitude)")
+    }
+    
+    func getCityName(location: CLLocation, completion: @escaping () -> ()) {
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(location) { [weak self]
+            (placemarks, error) -> Void in
+            if let placemarks = placemarks, placemarks.count > 0 {
+                self?.city = placemarks[0].locality!
+                completion()
+            }
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {

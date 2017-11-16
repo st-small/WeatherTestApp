@@ -93,7 +93,7 @@
                                                     <rect key="frame" x="8" y="5" width="279" height="90"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSG-GR-ie5">
-                                                            <rect key="frame" x="112" y="63.5" width="105" height="13.5"/>
+                                                            <rect key="frame" x="112" y="63.5" width="157" height="13.5"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="105" id="RzS-cO-3rO"/>
                                                             </constraints>
@@ -104,7 +104,7 @@
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="0.14766160102739725" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="trailing" secondItem="SSG-GR-ie5" secondAttribute="trailing" constant="62" id="6vP-bv-AMS"/>
+                                                        <constraint firstAttribute="trailing" secondItem="SSG-GR-ie5" secondAttribute="trailing" constant="10" id="6vP-bv-AMS"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">

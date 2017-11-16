@@ -32,7 +32,7 @@ class APIService {
                     
                     let countryAndCityStr = day["date"]!["tz_long"] as! String
                     let arr = countryAndCityStr.components(separatedBy: "/")
-                    let cityName = arr[1]
+                    let cityName = byCity.name
                     
                     let desc = day["conditions"] as! String
                     
@@ -49,7 +49,7 @@ class APIService {
                     
                     let date = "\(day["date"]!["weekday"] as! String), \(day["date"]!["day"] as! Int) \(day["date"]!["monthname_short"] as! String)"
                     
-                    let city = City(name: cityName, temperature: temp, day: date, description: desc.capitalized, rain: rain, wind: wind, cloud: clouds)
+                    let city = City(name: cityName!, temperature: temp, day: date, description: desc.capitalized, rain: rain, wind: wind, cloud: clouds)
                     
                     array.append(city)
                     

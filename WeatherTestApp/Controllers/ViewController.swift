@@ -67,13 +67,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func loadWeatherData(completion: @escaping (_: NSArray) -> ()) {
         var newArray = [String]()
         // get current position
-        model.getCurrentPosition { (city, response) in
-            guard response == true else { showAlert(title: AlertTitle.wrongGPS.rawValue, message: "Проблемы с получением Вашей геопозиции. Проеверьте, разрешили ли Вы приложению получать данные о Вашем местоположении. Проверить это Вы можете в Настройках устройства", actionTitle: AlertActionTitle.ok.rawValue); return }
+        model.getCurrentPosition { [weak self] (city, response) in
+            guard response == true else { self?.showAlert(title: AlertTitle.wrongGPS.rawValue, message: "Проблемы с получением Вашей геопозиции. Проеверьте, разрешили ли Вы приложению получать данные о Вашем местоположении. Проверить это Вы можете в Настройках устройства", actionTitle: AlertActionTitle.ok.rawValue); return }
             // get weather data for current position
             APIService.getCityData(byCity: city!, completion: { [weak self] (array) in
                 self?.forecasts = array
                 DispatchQueue.main.async {
-                    self?.cityName.text = self?.forecasts[0].name
+                    self?.cityName.text = city?.name
                     self?.forecast.text = self?.forecasts[0].description
                     self?.tempLabel.text = "\((self?.forecasts[0].temperature)!)°"
                     
