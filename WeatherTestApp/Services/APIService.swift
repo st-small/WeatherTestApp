@@ -30,8 +30,6 @@ class APIService {
                 
                 for day in forecastsDays {
                     
-                    let countryAndCityStr = day["date"]!["tz_long"] as! String
-                    let arr = countryAndCityStr.components(separatedBy: "/")
                     let cityName = byCity.name
                     
                     let desc = day["conditions"] as! String
