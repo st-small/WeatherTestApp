@@ -32,9 +32,10 @@ struct City {
         self.cloud = cloud
     }
     
-    init(longitude: Double, latitude: Double) {
+    init(longitude: Double, latitude: Double, city: String?) {
         
         self.lat = latitude
         self.long = longitude
+        self.name = city
     }
 }
